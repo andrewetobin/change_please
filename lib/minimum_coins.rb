@@ -3,7 +3,6 @@ class MinimumCoins
 
   def initialize
     @coins = {Quarters: 25, Dimes: 10, Nickels: 5, Pennies: 1}
-    @answer = Hash.new
   end
 
   def answer(dollar_amount)
@@ -20,9 +19,10 @@ class MinimumCoins
   end
 
   def how_many(integer)
-    @coins.map do |coin, number|
-      @answer[coin] = integer / @coins[coin]
-      integer -= @answer[coin] * number
+    @answer = coins.inject({}) do |hash, (coin, number)|
+      hash[coin] = integer / @coins[coin]
+      integer -= hash[coin] * number
+      hash
     end
     @answer
   end
